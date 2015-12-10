@@ -3,9 +3,8 @@
 Code accompanying the manuscript for integrative analysis of host transcriptomic/proteomic response to pathogens.
 
 Contains two code modules:
-
-A. MTG-LASSO to infer protein regulators of gene expression modules
-B. Physical subnetwork inference to connect predicted regulators for modules
+* A. MTG-LASSO to infer protein regulators of gene expression modules
+* B. Physical subnetwork inference to connect predicted regulators for modules
 
 # A. MTG-LASSO to infer protein regulators of gene expression modules #
 ### Requirements  
