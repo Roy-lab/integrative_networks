@@ -28,9 +28,14 @@ Main script for that step: **get_highconf_regs.sh**
 Java, Python 2.7, GAMS, CPLEX, bash.
 
 ### Step 1. Generate candidate paths to connect regulators for each module (gen_paths)
+Finds all directed paths up to a given length that connect 'upstream' MERLIN and MTG-LASSO regulators to 'downstream' MERLIN-identified transcription factors.
+
 Main script: **gen_paths/get_paths_for_modules.sh**
+
 Source code for influenza_subnet.jar is in the src/ directory. Main class: apps/InfluenzaMain
+
 Produces GAMS-ready files in directory gams_input/.
 
 ### Step 2. Optimize ILP to identify sparse subnetwork for each module (optimize)
+
 Main script:
