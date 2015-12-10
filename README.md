@@ -1,8 +1,11 @@
 # README #
 
 Code accompanying the manuscript for integrative analysis of host transcriptomic/proteomic response to pathogens.
+Two modules:
+A. MTG-LASSO to infer protein regulators of gene expression modules
+B. Physical subnetwork inference to connect predicted regulators for modules
 
-# MTG-LASSO to infer protein regulators of gene expression modules #
+# A. MTG-LASSO to infer protein regulators of gene expression modules #
 ### Requirements  
 Written with MATLAB 2014b, [SLEP v4.1](http://www.yelab.net/software/SLEP/), Python 2.7, bash.
 
@@ -18,7 +21,7 @@ The bash script, **infer_protein_regs.sh**, allows the user to run protein regul
 We extract high-confidence protein regulators based on frequency across folds as well as setting a threshold for regression weight and testing that the protein is not randomly assigned that weight under permutations of the protein data.
 Main script for that step: **get_highconf_regs.sh**
 
-# Physical subnetwork inference to connect predicted regulators for modules #
+# B. Physical subnetwork inference to connect predicted regulators for modules #
 ### Requirements
 Java, Python 2.7, GAMS, CPLEX, bash.
 
