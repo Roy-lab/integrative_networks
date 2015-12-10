@@ -27,6 +27,9 @@ Main script for that step: **get_highconf_regs.sh**
 ### Requirements
 Java, Python 2.7, GAMS, CPLEX, bash.
 
-### Step 1. Generate candidate paths to connect regulators for each module
+### Step 1. Generate candidate paths to connect regulators for each module (gen_paths)
+Main script: **gen_paths/get_paths_for_modules.sh**
+Produces GAMS-ready files in directory gams_input/.
 
-### Step 2. Optimize ILP to identify sparse subnetwork for each module
+### Step 2. Optimize ILP to identify sparse subnetwork for each module (optimize)
+Main script: 
