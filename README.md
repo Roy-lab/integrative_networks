@@ -38,4 +38,6 @@ Produces GAMS-ready files in directory gams_input/.
 
 ### Step 2. Optimize ILP to identify sparse subnetwork for each module (optimize)
 
-Main script:
+This step requires GAMS/CPLEX. (With some revisions, a different GAMS-compatible MIP solver could be used instead of CPLEX.)
+
+Main script: **optimize/run_modules.sh**
