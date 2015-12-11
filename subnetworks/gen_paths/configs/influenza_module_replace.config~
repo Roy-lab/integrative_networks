@@ -1,0 +1,73 @@
+# Template for config files for subnetwork inference (per module).
+#
+# Finds paths that "connect the dots" between our predicted regulators, our predicted protein regulators, and Watanabe PPIs
+# Module {MODULE} only
+# Version name: influenza_m{MODULE}
+
+# Read the current background network
+# EDGE_LIBRARY	filename	default-label	start_column	other_attributes
+EFEATURE	etype=CatSet(activation|binding|catalysis|ptmod|ppi|reaction|phospho)
+
+# read node features for upstream and downstream regulators - common to all merlin analyses
+NFEATURE	rtype=Discrete(upstream|downstream)	upstream and downstream regulators	features/reg_categories.tab	\t	1
+
+# Watanabe host factors
+NFEATURE	watanabe=Discrete(watanabe)	Watanabe host factors	features/watanabe_ppi.tab	\t	1
+
+# Protein regulators for the module
+# Already restricted to only those in the background network
+NFEATURE	protreg=Discrete(protreg)	MTGLASSO-predicted protein regulators	features/by_module/protreg_{MODULE}.tab	\t	1
+
+# Expression regulators for the module
+# Already restricted to only those in the background network
+NFEATURE	merlin=Discrete(merlin)	MERLIN-predicted regulators for module	features/by_module/expreg_{MODULE}.tab	\t	1
+
+# Paths start with protregs and watanabe hits
+NFILTER	start_prot	EqualsFilter	protreg	protreg
+NFILTER	start_watanabe	EqualsFilter	watanabe	watanabe
+
+# Ubiquitin, sumo, and friends - remove them under assumption that we have them covered by post-translational mods
+NFEATURE	ubiSumo=Discrete(ubiSumo)	ubiquitin/sumo and similar	features/ubi_common.tab	\t	1
+
+# End with MERLIN regulators (either signaling or TF) from this module only
+NFILTER	end_f	EqualsFilter	merlin	merlin
+
+
+NFILTERMANAGER	start_m	or	any	start_prot
+#|start_watanabe
+NFILTERMANAGER	end_m	or	any	end_f	
+
+# Common part
+# all interaction data sets in one file
+EDGE_LIBRARY	network/mega_bg_specified.tab	null	1	0
+
+# We will later be keeping only nodes that aren't annotated as ubiSumo.
+NFILTER	ubi_f	NotEqualsFilter	ubiSumo	ubiSumo
+
+# The anti-ubiquitin filter
+NFILTERMANAGER	ubi_m	or	all	ubi_f
+
+### Graph Filtering ###
+# By giving a filter manager to FILTER_GRAPH, we specify which nodes we are allowed to KEEP in the 
+# graph that we read in from the EdgeLibraries. So, this command keeps only nodes that are NOT 
+# annotated as ubiquitin or sumo.
+FILTER_GRAPH	ubi_m
+
+# Three kinds of pairs: 
+#MERLIN-regs to MERLIN-TFs
+ST_PAIRS	merlin_pair	pairs/module{MODULE}_merlin_pairs.tab
+
+# Protein regs to MERLIN regs
+ST_PAIRS	prot_pair	pairs/module{MODULE}_prot_merlin_pairs.tab	
+
+# Watanabe host factors to any regulator
+#ST_PAIRS	hostfactor_pair	pairs/module{MODULE}_hostfactor_pairs.tab	
+
+# pathfinding: 
+# allow more room for regulator pairs - lengths are in edges.
+PATHFINDER	merlin_path	PairPathFinder	merlin_pair	3
+PATHFINDER	protein_path	PairPathFinder	prot_pair	3
+
+GAMS_FILE	gams_input/influenza_m{MODULE}
+GAMS_LABEL_MODE	quote
+OUT_PREFIX	cytoscape/influenza_m{MODULE}
