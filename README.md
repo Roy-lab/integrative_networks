@@ -28,7 +28,7 @@ Main script for that step: **get_highconf_regs.sh**
 Java, Python 2.7, GAMS, CPLEX, bash.
 
 ### Step 1. Generate candidate paths to connect regulators for each module (gen_paths)
-Finds all directed paths up to a given length that connect 'upstream' MERLIN and MTG-LASSO regulators to 'downstream' MERLIN-identified transcription factors.
+Finds all directed paths up to a given length that connect 'upstream' regulators (eg, signaling proteins or other protein-level regulators that indirectly influence gene expression) to 'downstream' regulators (eg, transcription factors that directly affect RNA levels).
 
 Main script: **gen_paths/get_paths_for_modules.sh**
 
