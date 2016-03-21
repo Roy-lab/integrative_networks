@@ -1,6 +1,6 @@
 # README #
 
-Code accompanying the manuscript for integrative analysis of host transcriptomic/proteomic response to pathogens.
+Code for integrative analysis of host transcriptomic/proteomic response to pathogens.
 
 Contains two code modules:
 
